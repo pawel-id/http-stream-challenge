@@ -1,7 +1,7 @@
 const { Writable, finished } = require('stream')
 const prettyBytes = require('pretty-bytes')
 
-function printProgress(counter, start) {
+function printProgress(start, counter) {
   process.stdout.clearLine()
   process.stdout.clearLine()
   process.stdout.cursorTo(0)
@@ -18,11 +18,11 @@ class Counter extends Writable {
     this.counter = 0
     this.start = Date.now()
     this.timer = setInterval(
-      () => printProgress(this.counter, this.start),
+      () => printProgress(this.start, this.counter),
       1000
     )
     finished(this, (err) => {
-      printProgress(this.counter, this.start)
+      printProgress(this.start, this.counter)
       clearInterval(this.timer)
       process.stdout.write('\n')
     })
@@ -32,7 +32,6 @@ class Counter extends Writable {
     if (this.counter > 1024 * 1024 * 1024) this.end()
     done()
   }
-
 }
 
 module.exports = Counter
