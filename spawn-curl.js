@@ -2,12 +2,9 @@ const { spawn } = require('child_process')
 const { pipeline } = require('stream')
 const Counter = require('./counter')
 
-const url =
-  process.argv[2] ||
-  'https://skimdb.npmjs.com/registry/_changes?include_docs=true'
-const command = `curl`
+const url = process.argv[2] || require('./url')
 
-const curl = spawn(command, ['-s', url], {
+const curl = spawn('curl', ['-s', url], {
   stdin: ['inherit', 'pipe', 'inherit'],
 })
 

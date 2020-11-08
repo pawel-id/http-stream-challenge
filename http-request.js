@@ -2,9 +2,7 @@ const { pipeline } = require('stream')
 const https = require('https')
 const Counter = require('./counter')
 
-const url =
-  process.argv[2] ||
-  'https://skimdb.npmjs.com/registry/_changes?include_docs=true'
+const url = process.argv[2] || require('./url')
 
 https
   .request(url, (res) => {
