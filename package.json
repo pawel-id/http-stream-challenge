@@ -1,0 +1,21 @@
+{
+  "name": "http-stream-challenge",
+  "version": "1.0.0",
+  "description": "Http stream performance challenge",
+  "scripts": {
+    "http-request": "node http-request",
+    "spawn-curl": "node spawn-curl"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pretty-bytes": "^5.4.1"
+  },
+  "prettier" : {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
+  }
+}
