@@ -3,7 +3,6 @@ const prettyBytes = require('pretty-bytes')
 
 function printProgress(start, counter) {
   process.stdout.clearLine()
-  process.stdout.clearLine()
   process.stdout.cursorTo(0)
   const bytes = prettyBytes(counter)
   const rawSpeed = Math.floor(counter / ((Date.now() - start) / 1000))
