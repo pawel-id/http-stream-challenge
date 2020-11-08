@@ -7,7 +7,7 @@ spawn-curl`)
 
 ## results 
 
-mac book pro, 500 Gb/s link
+mac book pro, 500 Gb/s link, node v12.19.0
 
 ```
 spawn-curl
