@@ -1,4 +1,4 @@
-const { Writable } = require('stream')
+const { Writable, finished } = require('stream')
 const prettyBytes = require('pretty-bytes')
 
 function printProgress(counter, start) {
@@ -6,7 +6,8 @@ function printProgress(counter, start) {
   process.stdout.clearLine()
   process.stdout.cursorTo(0)
   const bytes = prettyBytes(counter)
-  const speed = `${prettyBytes(counter / ((Date.now() - start) / 1000))}/s`
+  const rawSpeed = Math.floor(counter / ((Date.now() - start) / 1000))
+  const speed = `${prettyBytes(rawSpeed)}/s`
   const mem = prettyBytes(process.memoryUsage().rss)
   process.stdout.write(`bytes: ${bytes} speed: ${speed} mem: ${mem}`)
 }
@@ -20,17 +21,18 @@ class Counter extends Writable {
       () => printProgress(this.counter, this.start),
       1000
     )
+    finished(this, (err) => {
+      printProgress(this.counter, this.start)
+      clearInterval(this.timer)
+      process.stdout.write('\n')
+    })
   }
   _write(chunk, enc, done) {
     this.counter += chunk.length
+    if (this.counter > 1024 * 1024 * 1024) this.end()
     done()
   }
 
-  _final(done) {
-    printProgress(this.counter)
-    clearInterval(this.timer)
-    done()
-  }
 }
 
 module.exports = Counter
